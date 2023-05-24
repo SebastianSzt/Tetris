@@ -1,18 +1,31 @@
-﻿namespace Tetris
+﻿using System.Runtime.Serialization;
+
+namespace Tetris
 {
+    [Serializable]
     internal class GameManager
     {
         private Grid tetrisGrid;
+        [NonSerialized]
         private BlockQueue tetrisBlockQueue;
         private Block tetrisTmpBlock;
         private bool gameOver = false;
+        private int score = 0;
 
         public int rows { get { return tetrisGrid.rows; } }
         public int columns { get { return tetrisGrid.columns; } }
         public byte this[int i, int j] { get { return tetrisGrid[i, j]; } }
         public bool gameOverStatus { get { return gameOver; } }
+        public int scoreValue { get { return score; } }
         public int nextBlockRows { get { return tetrisBlockQueue.nextBlock.rows; } }
         public int nextBlockColumns { get { return tetrisBlockQueue.nextBlock.columns; } }
+        public Block nextBlock { get { return tetrisBlockQueue.nextBlock; } set { tetrisBlockQueue.nextBlock = value; } }
+
+        [OnDeserialized]
+        private void OnDeserialized(StreamingContext context)
+        {
+            tetrisBlockQueue = new BlockQueue(tetrisGrid.columns);
+        }
 
         public GameManager(int rows, int columns)
         {
@@ -28,10 +41,7 @@
 
         public void CreateEnvironment()
         {
-            if (!CheckGameOver())
-            {
-                tetrisGrid.SetBlockOnGrid(tetrisTmpBlock);
-            }
+            tetrisGrid.SetBlockOnGrid(tetrisTmpBlock);
         }
 
         public void MakeTick()
@@ -45,7 +55,7 @@
             else
             {
                 tetrisGrid.SetBlockOnGrid(tetrisTmpBlock);
-                tetrisGrid.CheckTetrisRows();
+                score += tetrisGrid.CheckTetrisRows() * columns;
                 tetrisTmpBlock = tetrisBlockQueue.GetRandom();
                 if (!CheckGameOver())
                     tetrisGrid.SetBlockOnGrid(tetrisTmpBlock);
@@ -98,7 +108,7 @@
                 else
                 {
                     tetrisGrid.SetBlockOnGrid(tetrisTmpBlock);
-                    tetrisGrid.CheckTetrisRows();
+                    score += tetrisGrid.CheckTetrisRows() * columns;
                     tetrisTmpBlock = tetrisBlockQueue.GetRandom();
                     if (!CheckGameOver())
                         tetrisGrid.SetBlockOnGrid(tetrisTmpBlock);

@@ -1,5 +1,6 @@
 ﻿namespace Tetris
 {
+    [Serializable]
     public class Block
     {
         public int positionRow;

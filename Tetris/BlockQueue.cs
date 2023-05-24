@@ -10,8 +10,7 @@ namespace Tetris
         Type[] types;
         IEnumerable<Type> subclasses;
         Dictionary<string, Type> blockTypes;
-
-        private readonly Random random = new Random();
+        Random random = new Random();
 
         public BlockQueue(int x)
         {

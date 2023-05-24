@@ -38,7 +38,14 @@
             newGameButton = new Button();
             nextBlockLabel = new Label();
             nextBlockPanel = new Panel();
+            menuStrip1 = new MenuStrip();
+            zapiszToolStripMenuItem = new ToolStripMenuItem();
+            wczytajToolStripMenuItem = new ToolStripMenuItem();
+            ustawieniaToolStripMenuItem = new ToolStripMenuItem();
+            scoreLabel = new Label();
+            scoreValueLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)pause_play).BeginInit();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // TitleLabel
@@ -56,7 +63,7 @@
             // 
             InstructionsLabel.AutoSize = true;
             InstructionsLabel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            InstructionsLabel.Location = new Point(75, 200);
+            InstructionsLabel.Location = new Point(75, 153);
             InstructionsLabel.Name = "InstructionsLabel";
             InstructionsLabel.Size = new Size(137, 126);
             InstructionsLabel.TabIndex = 1;
@@ -72,9 +79,10 @@
             // 
             // pause_play
             // 
+            pause_play.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             pause_play.BackgroundImage = Properties.Resources.play;
             pause_play.BackgroundImageLayout = ImageLayout.Stretch;
-            pause_play.Location = new Point(608, 12);
+            pause_play.Location = new Point(620, 27);
             pause_play.Name = "pause_play";
             pause_play.Size = new Size(64, 64);
             pause_play.TabIndex = 3;
@@ -89,7 +97,7 @@
             // gameOverLabel
             // 
             gameOverLabel.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            gameOverLabel.Location = new Point(75, 200);
+            gameOverLabel.Location = new Point(75, 153);
             gameOverLabel.Name = "gameOverLabel";
             gameOverLabel.Size = new Size(200, 100);
             gameOverLabel.TabIndex = 4;
@@ -113,18 +121,68 @@
             // 
             nextBlockLabel.AutoSize = true;
             nextBlockLabel.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            nextBlockLabel.Location = new Point(200, 375);
+            nextBlockLabel.Location = new Point(75, 353);
             nextBlockLabel.Name = "nextBlockLabel";
-            nextBlockLabel.Size = new Size(126, 21);
+            nextBlockLabel.Size = new Size(121, 21);
             nextBlockLabel.TabIndex = 6;
-            nextBlockLabel.Text = "Następny blok:";
+            nextBlockLabel.Text = "Następny blok";
             // 
             // nextBlockPanel
             // 
-            nextBlockPanel.Location = new Point(225, 400);
+            nextBlockPanel.Location = new Point(78, 380);
             nextBlockPanel.Name = "nextBlockPanel";
-            nextBlockPanel.Size = new Size(95, 95);
+            nextBlockPanel.Size = new Size(126, 100);
             nextBlockPanel.TabIndex = 7;
+            // 
+            // menuStrip1
+            // 
+            menuStrip1.Items.AddRange(new ToolStripItem[] { zapiszToolStripMenuItem, wczytajToolStripMenuItem, ustawieniaToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(684, 24);
+            menuStrip1.TabIndex = 8;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // zapiszToolStripMenuItem
+            // 
+            zapiszToolStripMenuItem.Name = "zapiszToolStripMenuItem";
+            zapiszToolStripMenuItem.Size = new Size(52, 20);
+            zapiszToolStripMenuItem.Text = "Zapisz";
+            zapiszToolStripMenuItem.Click += SaveGame;
+            // 
+            // wczytajToolStripMenuItem
+            // 
+            wczytajToolStripMenuItem.Name = "wczytajToolStripMenuItem";
+            wczytajToolStripMenuItem.Size = new Size(60, 20);
+            wczytajToolStripMenuItem.Text = "Wczytaj";
+            wczytajToolStripMenuItem.Click += LoadGame;
+            // 
+            // ustawieniaToolStripMenuItem
+            // 
+            ustawieniaToolStripMenuItem.Name = "ustawieniaToolStripMenuItem";
+            ustawieniaToolStripMenuItem.Size = new Size(76, 20);
+            ustawieniaToolStripMenuItem.Text = "Ustawienia";
+            ustawieniaToolStripMenuItem.Click += ChangeSettings;
+            // 
+            // scoreLabel
+            // 
+            scoreLabel.AutoSize = true;
+            scoreLabel.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
+            scoreLabel.Location = new Point(350, 50);
+            scoreLabel.Name = "scoreLabel";
+            scoreLabel.Size = new Size(94, 32);
+            scoreLabel.TabIndex = 9;
+            scoreLabel.Text = "Wynik:";
+            // 
+            // scoreValueLabel
+            // 
+            scoreValueLabel.AutoSize = true;
+            scoreValueLabel.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
+            scoreValueLabel.Location = new Point(450, 50);
+            scoreValueLabel.Name = "scoreValueLabel";
+            scoreValueLabel.Size = new Size(28, 32);
+            scoreValueLabel.TabIndex = 10;
+            scoreValueLabel.Text = "0";
             // 
             // Visualizer
             // 
@@ -132,6 +190,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ScrollBar;
             ClientSize = new Size(684, 661);
+            Controls.Add(scoreValueLabel);
+            Controls.Add(scoreLabel);
             Controls.Add(nextBlockPanel);
             Controls.Add(nextBlockLabel);
             Controls.Add(newGameButton);
@@ -140,11 +200,16 @@
             Controls.Add(tetrisGamePanel);
             Controls.Add(InstructionsLabel);
             Controls.Add(TitleLabel);
-            MinimumSize = new Size(700, 700);
+            Controls.Add(menuStrip1);
+            MainMenuStrip = menuStrip1;
+            MinimumSize = new Size(650, 650);
             Name = "Visualizer";
             Text = "Tetris";
+            ResizeEnd += ChangeSize;
             KeyDown += Visualizer_KeyDown;
             ((System.ComponentModel.ISupportInitialize)pause_play).EndInit();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -160,5 +225,11 @@
         private Button newGameButton;
         private Label nextBlockLabel;
         private Panel nextBlockPanel;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem zapiszToolStripMenuItem;
+        private ToolStripMenuItem wczytajToolStripMenuItem;
+        private ToolStripMenuItem ustawieniaToolStripMenuItem;
+        private Label scoreLabel;
+        private Label scoreValueLabel;
     }
 }

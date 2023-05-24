@@ -1,5 +1,6 @@
 ﻿namespace Tetris
 {
+    [Serializable]
     public class Block_I : Block
     {
         public Block_I() : base() { }

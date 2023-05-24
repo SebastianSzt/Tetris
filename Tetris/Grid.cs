@@ -1,5 +1,6 @@
 ﻿namespace Tetris
 {
+    [Serializable]
     internal class Grid
     {
         private byte[,] grid;
@@ -13,8 +14,9 @@
             grid = new byte[x, y];
         }
 
-        public void CheckTetrisRows()
+        public int CheckTetrisRows()
         {
+            int points = 0;
             int checkingRows = rows - 1;
             bool wasFull = false;
             while (checkingRows >= 0)
@@ -30,6 +32,7 @@
                 }
                 if (isFullRow)
                 {
+                    points++;
                     for (int j = checkingRows; j > 0; j--)
                     {
                         for (int k = 0; k < columns; k++)
@@ -44,8 +47,8 @@
                 }
                 else
                     checkingRows--;
-
             }
+            return points;
         }
 
         public void SetBlockOnGrid(Block x)
