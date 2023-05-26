@@ -62,31 +62,20 @@ namespace Tetris
             }
         }
 
-        public void CheckKeyDown(KeyEventArgs e)
+        public void CheckKeyDown(char key)
         {
-            if (e.KeyCode == Keys.Q)
+            if (key == 'Q' || key == 'q' || key == 'E' || key == 'e')
             {
                 tetrisGrid.DeleteBlockFromGrid(tetrisTmpBlock);
-                if (CanRotateBlock('q'))
+                if (CanRotateBlock(key))
                 {
-                    tetrisTmpBlock.RotateBlock('q');
+                    tetrisTmpBlock.RotateBlock(key);
                     tetrisGrid.SetBlockOnGrid(tetrisTmpBlock);
                 }
                 else
                     tetrisGrid.SetBlockOnGrid(tetrisTmpBlock);
             }
-            else if (e.KeyCode == Keys.E)
-            {
-                tetrisGrid.DeleteBlockFromGrid(tetrisTmpBlock);
-                if (CanRotateBlock('e'))
-                {
-                    tetrisTmpBlock.RotateBlock('e');
-                    tetrisGrid.SetBlockOnGrid(tetrisTmpBlock);
-                }
-                else
-                    tetrisGrid.SetBlockOnGrid(tetrisTmpBlock);
-            }
-            else if (e.KeyCode == Keys.A)
+            else if (key == 'A' || key == 'a')
             {
                 tetrisGrid.DeleteBlockFromGrid(tetrisTmpBlock);
                 if (CanMoveBlock(0, -1))
@@ -97,7 +86,7 @@ namespace Tetris
                 else
                     tetrisGrid.SetBlockOnGrid(tetrisTmpBlock);
             }
-            else if (e.KeyCode == Keys.S)
+            else if (key == 'S' || key == 's')
             {
                 tetrisGrid.DeleteBlockFromGrid(tetrisTmpBlock);
                 if (CanMoveBlock(1, 0))
@@ -114,7 +103,7 @@ namespace Tetris
                         tetrisGrid.SetBlockOnGrid(tetrisTmpBlock);
                 }
             }
-            else if (e.KeyCode == Keys.D)
+            else if (key == 'D' || key == 'd')
             {
                 tetrisGrid.DeleteBlockFromGrid(tetrisTmpBlock);
                 if (CanMoveBlock(0, 1))

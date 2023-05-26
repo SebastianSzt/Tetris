@@ -152,6 +152,7 @@
             // 
             // wczytajToolStripMenuItem
             // 
+            wczytajToolStripMenuItem.Enabled = false;
             wczytajToolStripMenuItem.Name = "wczytajToolStripMenuItem";
             wczytajToolStripMenuItem.Size = new Size(60, 20);
             wczytajToolStripMenuItem.Text = "Wczytaj";
@@ -207,6 +208,7 @@
             Text = "Tetris";
             ResizeEnd += ChangeSize;
             KeyDown += Visualizer_KeyDown;
+            KeyUp += Visualizer_KeyUp;
             ((System.ComponentModel.ISupportInitialize)pause_play).EndInit();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();

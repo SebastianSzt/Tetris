@@ -2,7 +2,7 @@
 
 namespace Tetris
 {
-    internal class BlockQueue
+    public class BlockQueue
     {
         public Block nextBlock;
         private int GridColumns;

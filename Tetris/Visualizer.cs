@@ -7,6 +7,7 @@ namespace Tetris
         private GameManager tetrisGameManager = new GameManager(20, 10);
         private List<PictureBox> pictureBoxList = new List<PictureBox>();
         private List<PictureBox> nextBlockList = new List<PictureBox>();
+        private bool keyPressed = false;
 
         public Visualizer()
         {
@@ -16,6 +17,9 @@ namespace Tetris
 
         private void CreateEnvironment()
         {
+            if (File.Exists("save.bin") && File.Exists("save.txt"))
+                wczytajToolStripMenuItem.Enabled = true;
+
             pictureBoxList = new List<PictureBox>();
             nextBlockList = new List<PictureBox>();
             tetrisGamePanel.Controls.Clear();
@@ -208,22 +212,34 @@ namespace Tetris
 
         private void Visualizer_KeyDown(object sender, KeyEventArgs e)
         {
+            if (keyPressed)
+            {
+                return;
+            }
+
             if (timer.Enabled && (e.KeyCode == Keys.Q || e.KeyCode == Keys.E || e.KeyCode == Keys.A || e.KeyCode == Keys.S || e.KeyCode == Keys.D))
             {
                 if (e.KeyCode == Keys.S)
                 {
                     timer.Stop();
-                    tetrisGameManager.CheckKeyDown(e);
+                    tetrisGameManager.CheckKeyDown((char)e.KeyCode);
                     timer.Start();
                 }
                 else
                 {
-                    tetrisGameManager.CheckKeyDown(e);
+                    tetrisGameManager.CheckKeyDown((char)e.KeyCode);
                 }
                 CheckColor();
                 scoreValueLabel.Text = tetrisGameManager.scoreValue.ToString();
                 CheckGameOver();
             }
+
+            keyPressed = true;
+        }
+
+        private void Visualizer_KeyUp(object sender, KeyEventArgs e)
+        {
+            keyPressed = false;
         }
 
         private void CheckGameOver()
@@ -281,7 +297,7 @@ namespace Tetris
             settingsForm.Controls.Add(heightLabel);
 
             Label intervalLabel = new Label();
-            intervalLabel.Text = "Interwa³: (200ms-2000ms)";
+            intervalLabel.Text = "Interwa³: (100ms-2000ms)";
             intervalLabel.AutoSize = true;
             intervalLabel.Location = new Point(20, 100);
             settingsForm.Controls.Add(intervalLabel);
@@ -301,7 +317,7 @@ namespace Tetris
             settingsForm.Controls.Add(heightNumericUpDown);
 
             NumericUpDown intervalNumericUpDown = new NumericUpDown();
-            intervalNumericUpDown.Minimum = 200;
+            intervalNumericUpDown.Minimum = 100;
             intervalNumericUpDown.Maximum = 2000;
             intervalNumericUpDown.Value = timer.Interval;
             intervalNumericUpDown.Location = new Point(190, 95);

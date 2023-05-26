@@ -43,7 +43,7 @@
 
             byte[,] rotatedBlock = new byte[columns, rows];
 
-            if (x == 'q')
+            if (x == 'q' || x == 'Q')
             {
                 for (int i = 0; i < columns; i++)
                 {
@@ -53,7 +53,7 @@
                     }
                 }
             }
-            else if (x == 'e')
+            else if (x == 'e' || x == 'E')
             {
                 for (int i = 0; i < columns; i++)
                 {

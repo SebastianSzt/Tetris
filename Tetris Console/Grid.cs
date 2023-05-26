@@ -1,7 +1,7 @@
 ﻿namespace Tetris
 {
     [Serializable]
-    internal class Grid
+    public class Grid
     {
         private byte[,] grid;
 
