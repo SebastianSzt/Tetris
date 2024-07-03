@@ -1,1 +1,1 @@
-Gra tetris
+Gra Tetris
